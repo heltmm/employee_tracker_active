@@ -62,7 +62,7 @@
   </div>
   <div class="col-md-4">
   <% if @employee %>
-    <%= @employee.name %>
+    <h3>Employee: <%= @employee.name %></h3>
     <form action="/employee/<%=@employee.id %>" method="post">
     <select class="form-control" name='project_id' type='text'>
         <% @projects.each() do |project| %>
@@ -80,7 +80,8 @@
   </div>
   <div class="col-md-4">
     <% if @project %>
-      <%= @project.name %>
+      <h3>Project: <%= @project.name %></h3>
+      <h4>Employees</h4>
       <% Employee.where(project_id: @project.id).find_each do |employee| %>
         <li><%= employee.name %></li>
       <%end%>
