@@ -76,3 +76,13 @@ delete('/project/delete/:id') do
   Project.delete(Project.find(params[:id]))
   redirect('/')
 end
+
+patch('/project/employee/:id') do
+  Employee.find(params['employee_id']).update(:project_id => params['id'])
+  redirect('/')
+end
+
+patch('/division/employee/:id') do
+  Employee.find(params['employee_id']).update(:division_id => params['id'])
+  redirect('/')
+end
