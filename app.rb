@@ -28,6 +28,11 @@ post('/project') do
   redirect ('/')
 end
 
+post('/employee') do
+  Employee.create(:name => params['name'], :project_id => nil)
+  redirect ('/')
+end
+
 get('/project/:id') do
   @employees = Employee.all
   @divisions = Division.all
@@ -37,7 +42,6 @@ get('/project/:id') do
 end
 
 get('/division/:id') do
-
   @employees = Employee.all
   @divisions = Division.all
   @projects = Project.all
@@ -45,10 +49,30 @@ get('/division/:id') do
   erb(:index)
 end
 
-get('/employee:id') do
+get('/employee/:id') do
   @employees = Employee.all
   @divisions = Division.all
   @projects = Project.all
   @employee = Employee.find(params[:id])
   erb(:index)
+end
+
+post('/employee/:id') do
+  Employee.find(params['id']).update( :project_id => params['project_id'])
+  redirect ('/')
+end
+
+delete('/division/delete/:id') do
+  Division.delete(Division.find(params[:id]))
+  redirect('/')
+end
+
+delete('/employee/delete/:id') do
+  Employee.delete(Employee.find(params[:id]))
+  redirect('/')
+end
+
+delete('/project/delete/:id') do
+  Project.delete(Project.find(params[:id]))
+  redirect('/')
 end

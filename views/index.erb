@@ -45,25 +45,49 @@
 
   </div>
 
-</div>
+</div><br>
 <div class="row">
   <div class="col-md-4">
     <% if @division %>
-      <%= @division.name %>
+      <h3>Divsion: <%= @division.name %></h3>
+      <h4>Projects:</h4>
       <% Project.where(division_id: @division.id).find_each do |project| %>
         <li><%= project.name %></li>
       <%end%>
-
+      <form class="form-control" action="/division/delete/<%= @division.id %>" method="post">
+          <input type="hidden" name="_method" value="delete">
+          <button class="btn btn-danger" type="submit" name="button">Delete Division</button>
+      </form>
     <%end%>
   </div>
   <div class="col-md-4">
   <% if @employee %>
     <%= @employee.name %>
+    <form action="/employee/<%=@employee.id %>" method="post">
+    <select class="form-control" name='project_id' type='text'>
+        <% @projects.each() do |project| %>
+          <option value="<%= project.id %>"> <%= project.name %> </option>
+        <% end %>
+    </select>
+    <button type="submit">Assign to Project</button>
+    </form>
+    <form class="form-control" action="/employee/delete/<%= @employee.id %>" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <button class="btn btn-danger" type="submit" name="button">Delete Employee</button>
+    </form>
   <%end%>
+
   </div>
   <div class="col-md-4">
     <% if @project %>
       <%= @project.name %>
+      <% Employee.where(project_id: @project.id).find_each do |employee| %>
+        <li><%= employee.name %></li>
+      <%end%>
+      <form class="form-control" action="/project/delete/<%= @project.id %>" method="post">
+          <input type="hidden" name="_method" value="delete">
+          <button class="btn btn-danger" type="submit" name="button">Delete Project</button>
+      </form>
     <%end%>
   </div>
 </div>
